@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+     <!-- 定义当前的应用的名称 主要是用于注册中心的信息保存 这个名称可以任意编写 -->
+	<dubbo:application name="${dubbo.application.name}" />
+	<!-- 定义dubbo的注册中心的地址 -->
+	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" check="true"/>
+	<!-- 定义dubbo所在的服务之星时暴露给客户端的端口 -->
+	<dubbo:protocol name="dubbo" port="${dubbo.protocal.port}" dispatcher="all" threadpool="fixed" threads="4"/>
+	<!-- 定义超时时间 -->
+	<dubbo:provider timeout="${dubbo.provider.timeout}" />
+	<!-- 定义服务接口 这个接口定义的时候要考虑到一个版本问题 -->
+	<dubbo:service interface="com.darren.remoteapi.IMessage" ref="messageImpl" version="${dubbo.interface.version}" weight="50" />
+</beans>
